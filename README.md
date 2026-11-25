@@ -1,66 +1,86 @@
-# Prueba individual · Sesión 03
+# Demanda eléctrica en España (2023-2026)
 
-**Career Tech Hub · Empleo Data + IA**
-Autora: Paola Tron Escobosa
-Fecha de entrega: noviembre de 2026
+**Prueba técnica individual · Career Tech Hub · Empleo Data + IA · Sesión 03**
+Autora: Paola Tron Escobosa · Noviembre de 2026
 
-Prueba técnica sobre la demanda y la generación de electricidad en España (del 01/01/2023 al 15/11/2026), resuelta con **Python (pandas)**, **SQL (SQLite)** y **Excel**.
+## La pregunta
 
----
+¿Cómo se comporta la demanda de electricidad en España y de dónde sale esa electricidad? Datos diarios de demanda, generación por tecnología y tiempo, del 01/01/2023 al 15/11/2026.
 
-## Contenido del repositorio
+## La respuesta, en una frase
 
-```
-prueba-individual-sesion03/
-├── README.md
-├── notebook/
-│   └── Prueba_individual_Paola Tron Escobosa.ipynb   ← cuaderno con las partes A, B y D
-├── datos/
-│   ├── electricidad.db                               ← base de datos SQLite
-│   └── electricidad_para_panel.xlsx                  ← datos para la parte C
-├── Consultas_SQL/
-│   └── consultas.sql                                 ← consultas de la parte B
-└── parte_C/
-    └── capturas de la tabla dinámica y del gráfico (Excel)
-```
+**La demanda sube cuando la temperatura se aleja de lo templado y cae un 14 % los días de descanso. En 2025, la eólica fue la primera fuente de electricidad (22 %), y más de la mitad de la generación vino del viento, el sol y el agua.**
 
-## Partes resueltas
-
-| Parte | Herramienta | Contenido |
-|---|---|---|
-| A | pandas | Días con demanda > 800 GWh, demanda en laborables vs. descanso, meses de mayor y menor demanda |
-| B | SQL | Días más calurosos y su demanda, generación solar fotovoltaica, días de lluvia por ciudad y reto con `LAG` |
-| C | Excel | Tabla dinámica de demanda media (mes × año) y gráfico de generación por tecnología en 2025 |
-| D | — | Decisiones, resultado principal, límites del análisis y uso de IA |
-
-Además de lo que pedía cada pregunta, se añadieron gráficos y comprobaciones para apoyar las conclusiones (por ejemplo, la relación entre temperatura y demanda o la generación solar por mes).
+![Porcentaje de generación por tecnología en 2025](docs/img/c2_generacion_2025_grafico.png)
 
 ## Principales resultados
 
-- **A1.** 115 días superaron los 800 GWh: 16 en 2023, 10 en 2024, 25 en 2025 y 64 en 2026, aunque este último año aún no está completo.
-- **A2.** En un día de descanso se demanda entre un 13,5 % y un 14,5 % menos de electricidad que en un día laborable, y la diferencia se mantiene estable todos los años.
-- **A3.** El mes con mayor demanda media fue julio de 2026 (814,83 GWh) y el de menor, abril de 2023 (610,56 GWh). La demanda tiene dos picos al año (invierno y verano) y dos valles (primavera y otoño).
-- **B1.** Los cinco días más calurosos superan la media de su tipo de día (laborable o descanso), pero solo uno pasa de 800 GWh, porque tres de ellos cayeron en fin de semana.
-- **B2.** La fotovoltaica pasó de 37,45 TWh (14,2 %) en 2023 a 50,29 TWh (18,5 %) en 2025. El 22,4 % de 2026 probablemente esté sobreestimado, porque faltan noviembre y diciembre, que son meses de poca generación solar.
-- **B3.** Bilbao es la ciudad con más días de lluvia (611) y Valencia la que menos tiene (218).
-- **Reto.** La mayor subida diaria fue el 29/04/2025 (+186,71 GWh), por la recuperación tras el apagón del 28/04/2025, cuando la demanda cayó a 403 GWh.
-- **C1.** Noviembre de 2026 no se puede comparar con los demás meses, porque solo incluye la primera quincena.
-- **C2.** La eólica fue la tecnología con mayor generación en 2025, con un 22 % del total.
+| Pregunta | Resultado |
+|---|---|
+| A1 · Días con demanda > 800 GWh | 115 en total: 16 (2023), 10 (2024), 25 (2025) y 64 (2026*) |
+| A2 · Laborable vs. descanso | Los días de descanso se demanda entre un 13,5 % y un 14,5 % menos, de forma estable todos los años |
+| A3 · Mes de mayor y menor demanda | Máximo: julio de 2026 (814,83 GWh). Mínimo: abril de 2023 (610,56 GWh) |
+| B1 · Días más calurosos | Los cinco superan la media de su tipo de día, pero solo uno pasa de 800 GWh: tres cayeron en fin de semana |
+| B2 · Solar fotovoltaica | De 37,45 TWh (14,2 %) en 2023 a 50,29 TWh (18,5 %) en 2025. El 22,4 % de 2026* está probablemente sobreestimado |
+| B3 · Días de lluvia (≥ 1 mm) | Bilbao, 611 días; Valencia, la que menos, 218 |
+| Reto · Mayor subida diaria (`LAG`) | 29/04/2025 (+186,71 GWh): recuperación tras el apagón del 28/04/2025 (403 GWh) |
+| C1 · Celda no comparable | Noviembre de 2026: solo incluye la primera quincena |
+| C2 · Generación 2025 | La eólica fue la tecnología que más generó, con un 22 % del total |
 
-## Limitaciones
+\* Datos de 2026 hasta el 15/11/2026.
 
-- Los datos de 2026 llegan hasta el 15/11/2026, así que la media anual de 2026, noviembre de 2026 y los porcentajes de ese año no son del todo comparables con los de los años completos.
-- En la B3 se cuentan días de lluvia, no la cantidad de lluvia caída.
-- La relación entre temperatura y demanda no permite separar el efecto del clima de otros factores (día de la semana, vacaciones o aumento general del consumo). Para eso harían falta datos de demanda por sector.
+**Comprobaciones:** el resultado del reto con `LAG` se verificó con `diff()` en pandas, y los valores de la tabla dinámica de Excel coinciden con los calculados en pandas en la A3.
 
-## Cómo ejecutar el cuaderno
+![Tabla dinámica de la demanda media por mes y año (C1)](docs/img/c1_tabla_dinamica.png)
 
-1. Clona o descarga el repositorio, manteniendo la estructura de carpetas.
-2. Instala las librerías necesarias:
+## Datos
+
+| Archivo | Contenido |
+|---|---|
+| `data/electricidad.db` | Base de datos SQLite: `demanda`, `generacion`, `tiempo`, `ciudades`, `festivos` y las vistas `temperatura_nacional` y `tabla_dias` |
+| `data/electricidad_para_panel.xlsx` | Hojas `dias` y `generacion`, usadas en el cuaderno y en Excel |
+
+Los archivos de `data/` son los originales y no se modifican.
+
+## Cómo ejecutarlo
+
+1. Clona el repositorio:
    ```
-   pip install pandas matplotlib openpyxl
+   git clone https://github.com/paolabtronescobosa/prueba-individual-sesion03.git
    ```
-3. Abre `notebook/Prueba_individual_Paola Tron Escobosa.ipynb` en Jupyter o VS Code y ejecuta todas las celdas. El cuaderno lee los datos de la carpeta `datos/` con rutas relativas (`../datos/...`).
+2. Instala las dependencias:
+   ```
+   pip install -r requirements.txt
+   ```
+3. Abre `notebooks/01_prueba_individual_paola_tron_escobosa.ipynb` y ejecuta todas las celdas. Las rutas son relativas (`Path("..") / "data"`), así que funciona sin cambiar nada si se mantiene la estructura de carpetas.
+4. Las consultas de la parte B también se pueden ejecutar directamente en SQLite con `sql/consultas.sql`.
+
+## Estructura
+
+```
+prueba-tecnica-demanda-electrica/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── data/
+│   ├── electricidad.db
+│   └── electricidad_para_panel.xlsx
+├── notebooks/
+│   └── 01_prueba_individual_paola_tron_escobosa.ipynb
+├── sql/
+│   └── consultas.sql
+├── excel/
+│   └── parte_c_paola_tron_escobosa.xlsx   ← copia de trabajo con la tabla dinámica y el gráfico
+└── docs/
+    ├── enunciado.pdf
+    └── img/                               ← gráficos del cuaderno y capturas de C1 y C2
+```
+
+## Límites del análisis
+
+- **2026 está incompleto** (datos hasta el 15/11/2026). La media anual de 2026, noviembre de 2026 y los porcentajes de ese año no son del todo comparables con los de los años completos. Para compararlos de forma justa habría que usar solo de enero a octubre en todos los años.
+- **Temperatura y demanda:** la relación se ve con los 1415 días, pero no permite separar el efecto del clima de otros factores (día de la semana, vacaciones o aumento general del consumo). Para eso harían falta datos de demanda por sector.
+- **Lluvia:** en la B3 se cuentan días de lluvia, no la cantidad de lluvia caída.
 
 ## Uso de IA
 
