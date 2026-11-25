@@ -51,7 +51,7 @@ FROM demanda
 ORDER BY demanda_gwh ASC
 LIMIT 1;
 
-Para A2:
+--Para A2:
 
 --Demanda media por año
 SELECT año,
@@ -72,9 +72,9 @@ FROM (
 )
 GROUP BY año;
 
-Para A3:
+--Para A3:
 
----Mes con mayor demanda media:
+--Mes con mayor demanda media:
 SELECT strftime('%Y', fecha) AS año,
        strftime('%m', fecha) AS mes,
        AVG(demanda_gwh) AS demanda_media
@@ -83,7 +83,7 @@ GROUP BY año, mes
 ORDER BY demanda_media DESC
 LIMIT 1;
 
----Mes con menor demanda media:
+--Mes con menor demanda media:
 SELECT strftime('%Y', fecha) AS año,
        strftime('%m', fecha) AS mes,
        AVG(demanda_gwh) AS demanda_media
