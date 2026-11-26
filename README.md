@@ -46,7 +46,7 @@ Los archivos de `data/` son los originales y no se modifican.
 
 1. Clona el repositorio:
    ```
-   git clone https://github.com/paolabtronescobosa/prueba-individual-sesion03.git
+   git clone https://github.com/paolabtronescobosa/prueba-tecnica-demanda-electrica.git
    ```
 2. Instala las dependencias:
    ```
